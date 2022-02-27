@@ -5,3 +5,10 @@ export const LoginAction = (payload, uId) => {
     uId: uId,
   };
 };
+export const LogoutAction = (payload, uId) => {
+  return {
+    type: "LOGOUT_ACTION",
+    payload: payload,
+    uId: uId,
+  };
+};

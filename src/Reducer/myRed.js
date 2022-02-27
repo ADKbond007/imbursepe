@@ -12,6 +12,13 @@ const red = (state = initialState, action) => {
         isLoggedIn: true,
         uId: action.uId,
       };
+    case "LOGOUT_ACTION":
+      console.log("Logout success");
+      return {
+        ...state,
+        isLoggedIn: false,
+        uId: "",
+      };
 
     default:
       return state;

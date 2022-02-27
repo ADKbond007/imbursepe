@@ -6,10 +6,14 @@ import {
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
-import { Link } from "react-router-dom";
-import { Router, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+} from "react-router-dom";
 import { connect } from "react-redux";
-import { loginSuccess } from "../Reducer/myReducer";
 import { LoginAction } from "../Action/Myaction";
 // import store from "../store";
 
@@ -31,7 +35,6 @@ class Login extends Component {
       });
   };
   loginFunc = () => {
-    console.log("HEllo i am here");
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
     signInWithPopup(auth, provider)
@@ -42,12 +45,13 @@ class Login extends Component {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        console.log("user", user);
+        console.log("user from login function", user);
         this.props.loginSuccess();
+        console.log("logerstatus", this.props.isLoggedIn);
         window.location.href = "/landing";
       })
       .catch((error) => {
-        console.log("HELOOOOOOOOO");
+        console.log("Error message:", error);
         const errorCode = error.code;
         const errorMessage = error.message;
         // The email of the user's account used.
@@ -64,6 +68,12 @@ class Login extends Component {
     const { classes } = this.props;
     return (
       <div>
+        {this.props.isLoggedIn === true ? (
+          <Navigate to="/landing" />
+        ) : (
+          <Navigate to="/login" />
+        )}
+        <h1>LOGIN PAGE</h1>
         <Button variant="primary" onClick={this.loginFunc}>
           Login
         </Button>
@@ -86,7 +96,6 @@ const mapStateToProps = (state) => {
   }; // state
 };
 const mapDispatchToProps = (dispatch) => {
-  console.log("Dispatch", dispatch);
   return {
     loginSuccess: () => dispatch(LoginAction("hello")),
   };
