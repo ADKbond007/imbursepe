@@ -28,6 +28,9 @@ class Login extends Component {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
+        sessionStorage.setItem("loginVar", "false");
+        window.location.href = "/login";
+
         console.log("Signout Success");
       })
       .catch((error) => {
@@ -47,7 +50,7 @@ class Login extends Component {
         const user = result.user;
         console.log("user from login function", user);
         this.props.loginSuccess();
-        console.log("logerstatus", this.props.isLoggedIn);
+        sessionStorage.setItem("loginVar", "true");
         window.location.href = "/landing";
       })
       .catch((error) => {
@@ -60,19 +63,20 @@ class Login extends Component {
         const credential = GoogleAuthProvider.credentialFromError(error);
       });
   };
-  componentDidMount() {}
-  myf = () => {
-    console.log("FUNCTION", this.props.isLoggedIn);
+  componentDidMount = () => {
+    sessionStorage.setItem("loginVar", "false");
   };
+  myf = () => {};
+
   render() {
     const { classes } = this.props;
     return (
       <div>
-        {this.props.isLoggedIn === true ? (
+        {/* {this.props.isLoggedIn === true ? (
           <Navigate to="/landing" />
         ) : (
           <Navigate to="/login" />
-        )}
+        )} */}
         <h1>LOGIN PAGE</h1>
         <Button variant="primary" onClick={this.loginFunc}>
           Login
@@ -83,7 +87,8 @@ class Login extends Component {
         <Button variant="secondary" onClick={this.myf}>
           SHOW
         </Button>
-        {this.props.isLoggedIn}
+
+        {this.props.payload}
       </div>
     );
   }
@@ -91,8 +96,8 @@ class Login extends Component {
 const mapStateToProps = (state) => {
   console.log("state", state);
   return {
-    isLoggedIn: state.isLoggedIn,
     value: state.value,
+    payload: state.payload,
   }; // state
 };
 const mapDispatchToProps = (dispatch) => {

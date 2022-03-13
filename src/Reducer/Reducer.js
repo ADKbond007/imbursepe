@@ -1,5 +1,5 @@
 const initialState = {
-  isLoggedIn: false,
+  payload: "Hellopayload",
   uId: "",
 };
 
@@ -9,14 +9,12 @@ const reducer = (state = initialState, action) => {
       console.log("Login Success");
       return {
         ...state,
-        isLoggedIn: true,
         uId: action.uId,
       };
     case "LOGOUT_ACTION":
       console.log("Logout success");
       return {
         ...state,
-        isLoggedIn: false,
         uId: "",
       };
 

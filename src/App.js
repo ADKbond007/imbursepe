@@ -22,9 +22,7 @@ class App extends React.Component {
   constructor(props) {
     console.log("APP CALLED APP CALLED");
     super(props);
-    this.state = {
-      isLoggedIn: this.props.isLoggedIn,
-    };
+    this.state = {};
   }
 
   render() {
@@ -37,7 +35,7 @@ class App extends React.Component {
               exact
               path="/"
               element={
-                this.props.isLoggedIn ? (
+                sessionStorage.getItem("loginVar") === "true" ? (
                   <Navigate to="/login" />
                 ) : (
                   <Navigate to="/landing" />
@@ -48,14 +46,23 @@ class App extends React.Component {
               exact
               path="/login"
               element={
-                this.props.isLoggedIn ? <Navigate to="/landing" /> : <Login />
+                sessionStorage.getItem("loginVar") === "true" ? (
+                  (console.log("Lginvar", sessionStorage.getItem("loginVar")),
+                  (<Navigate to="/landing" />))
+                ) : (
+                  <Login />
+                )
               }
             ></Route>
             <Route
               exact
               path="/landing"
               element={
-                this.props.isLoggedIn ? <Landing /> : <Navigate to="/login" />
+                sessionStorage.getItem("loginVar") === "true" ? (
+                  <Landing />
+                ) : (
+                  <Navigate to="/login" />
+                )
               }
             ></Route>
           </Routes>
@@ -67,7 +74,6 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   console.log("THIS IS THE STATE FROM APP", state);
   return {
-    isLoggedIn: state.isLoggedIn,
     value: state.value,
   }; // state
 };

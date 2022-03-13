@@ -12,10 +12,11 @@ import {
 class Landing extends React.Component {
   constructor(props) {
     super(props);
+    console.log("Landing Page Activated");
   }
+  componentDidMount = () => {};
   callLoger = () => {
-    console.log("This is the call loger function:", this.props.isLoggedIn);
-    const user = getAuth().currentUser;
+    const user = getAuth().currentUser.displayName;
     console.log("USER", user);
   };
   logoutFunc = () => {
@@ -25,6 +26,7 @@ class Landing extends React.Component {
         // Sign-out successful.
         console.log("Signout Success");
         this.props.logoutSuccess();
+        sessionStorage.setItem("loginVar", "false");
         window.location.href = "/login";
       })
       .catch((error) => {
@@ -46,7 +48,6 @@ class Landing extends React.Component {
 const mapStateToProps = (state) => {
   console.log("THIS IS THE STATE FROM APP", state);
   return {
-    isLoggedIn: state.isLoggedIn,
     value: state.value,
   }; // state
 };
