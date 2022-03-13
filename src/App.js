@@ -13,7 +13,7 @@ import Login from "./components/login";
 import Landing from "./components/landing";
 import { connect } from "react-redux";
 import { LoginAction } from "./Action/Myaction";
-import { loginSuccess } from "./Reducer/myRed";
+import { loginSuccess } from "./Reducer/Reducer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import { getAuth, onAuthStateChanged } from "firebase/auth";

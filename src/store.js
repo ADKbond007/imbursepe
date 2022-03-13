@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createStore } from "@reduxjs/toolkit";
 // import { myreducerSlice } from "./Reducer/myReducer";
-import red from "./Reducer/myRed";
+import reducer from "./Reducer/Reducer";
 const store = configureStore({
-  reducer: red,
+  reducer: reducer,
 });
 export default store;
