@@ -32,13 +32,14 @@ class App extends React.Component {
           <h1>TITLE PAGE</h1>
           <Routes>
             <Route
-              exact
-              path="/"
+              path="*"
               element={
                 sessionStorage.getItem("loginVar") === "true" ? (
                   <Navigate to="/login" />
                 ) : (
-                  <Navigate to="/landing" />
+                  <Navigate
+                    to={"/" + sessionStorage.getItem("userId") + "/landing"}
+                  />
                 )
               }
             ></Route>
@@ -48,7 +49,11 @@ class App extends React.Component {
               element={
                 sessionStorage.getItem("loginVar") === "true" ? (
                   (console.log("Lginvar", sessionStorage.getItem("loginVar")),
-                  (<Navigate to="/landing" />))
+                  (
+                    <Navigate
+                      to={"/" + sessionStorage.getItem("userId") + "/landing"}
+                    />
+                  ))
                 ) : (
                   <Login />
                 )
@@ -56,7 +61,7 @@ class App extends React.Component {
             ></Route>
             <Route
               exact
-              path="/landing"
+              path=":userId/landing"
               element={
                 sessionStorage.getItem("loginVar") === "true" ? (
                   <Landing />
@@ -72,7 +77,7 @@ class App extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log("THIS IS THE STATE FROM APP", state);
+  // console.log("THIS IS THE STATE FROM APP", state);
   return {
     value: state.value,
   }; // state

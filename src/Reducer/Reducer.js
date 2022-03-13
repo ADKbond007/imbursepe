@@ -1,5 +1,6 @@
 const initialState = {
   payload: "Hellopayload",
+  userData: {},
   uId: "",
 };
 
@@ -9,7 +10,12 @@ const reducer = (state = initialState, action) => {
       console.log("Login Success");
       return {
         ...state,
-        uId: action.uId,
+      };
+    case "UPDATE_USER_DATA":
+      console.log("update payload", action.payload);
+      return {
+        ...state,
+        userData: action.payload,
       };
     case "LOGOUT_ACTION":
       console.log("Logout success");

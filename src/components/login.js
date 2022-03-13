@@ -23,20 +23,20 @@ class Login extends Component {
     console.log("Login Page Activated");
   }
 
-  logoutFunc = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        sessionStorage.setItem("loginVar", "false");
-        window.location.href = "/login";
+  // logoutFunc = () => {
+  //   const auth = getAuth();
+  //   signOut(auth)
+  //     .then(() => {
+  //       // Sign-out successful.
+  //       sessionStorage.setItem("loginVar", "false");
+  //       window.location.href = "/login";
 
-        console.log("Signout Success");
-      })
-      .catch((error) => {
-        // An error happened.
-      });
-  };
+  //       console.log("Signout Success");
+  //     })
+  //     .catch((error) => {
+  //       // An error happened.
+  //     });
+  // };
   loginFunc = () => {
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
@@ -48,10 +48,14 @@ class Login extends Component {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        console.log("user from login function", user);
+
         this.props.loginSuccess();
         sessionStorage.setItem("loginVar", "true");
-        window.location.href = "/landing";
+        sessionStorage.setItem("userId", user.uid);
+
+        // window.location.href = "/landing";
+        window.history.pushState({}, "", `/${user.uid}/landing`);
+        window.location.reload();
       })
       .catch((error) => {
         console.log("Error message:", error);
@@ -81,14 +85,6 @@ class Login extends Component {
         <Button variant="primary" onClick={this.loginFunc}>
           Login
         </Button>
-        <Button variant="secondary" onClick={this.logoutFunc}>
-          Logout
-        </Button>
-        <Button variant="secondary" onClick={this.myf}>
-          SHOW
-        </Button>
-
-        {this.props.payload}
       </div>
     );
   }
@@ -102,7 +98,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginSuccess: () => dispatch(LoginAction("hello")),
+    loginSuccess: () => dispatch(LoginAction()),
   };
 };
 

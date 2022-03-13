@@ -1,8 +1,13 @@
-export const LoginAction = (payload, uId) => {
+export const LoginAction = () => {
   return {
     type: "LOGIN_ACTION",
-    payload: payload,
-    uId: uId,
+  };
+};
+export const UpdateUserData = (data) => {
+  console.log("Data from action", data);
+  return {
+    type: "UPDATE_USER_DATA",
+    payload: data,
   };
 };
 export const LogoutAction = (payload, uId) => {
