@@ -1,3 +1,5 @@
+import { DEFAULT_VERSION } from "redux-persist";
+
 export const LoginAction = () => {
   return {
     type: "LOGIN_ACTION",
@@ -15,5 +17,11 @@ export const LogoutAction = (payload, uId) => {
     type: "LOGOUT_ACTION",
     payload: payload,
     uId: uId,
+  };
+};
+export const SetPath = (payload) => {
+  return {
+    type: "SET_PATH",
+    payload: payload,
   };
 };

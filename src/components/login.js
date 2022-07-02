@@ -14,7 +14,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { connect } from "react-redux";
-import { LoginAction } from "../Action/Myaction";
+import { LoginAction, SetPath } from "../Action/Myaction";
 // import store from "../store";
 
 class Login extends Component {
@@ -52,6 +52,7 @@ class Login extends Component {
         this.props.loginSuccess();
         sessionStorage.setItem("loginVar", "true");
         sessionStorage.setItem("userId", user.uid);
+        sessionStorage.setItem("currentPath", "landing");
 
         // window.location.href = "/landing";
         window.history.pushState({}, "", `/${user.uid}/landing`);
@@ -94,7 +95,7 @@ const mapStateToProps = (state) => {
   return {
     value: state.value,
     payload: state.payload,
-  }; // state
+  };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

@@ -3,8 +3,11 @@ import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import clsx from "clsx";
 
 import { getAuth, signOut } from "firebase/auth";
+import "../../scss/m-navbar.scss";
+import { SetPath } from "../../Action/Myaction";
 class CreateNavbar extends React.Component {
   constructor(props) {
     super(props);
@@ -24,13 +27,46 @@ class CreateNavbar extends React.Component {
         console.log(error);
       });
   };
+  pathHandler = (toPathName) => {
+    sessionStorage.setItem("currentPath", toPathName);
+    window.location.pathname = `/${this.props.userData.uid}/${toPathName}`;
+  };
+
   render() {
     return (
       <Navbar bg="primary" variant="dark">
         <Container>
           {/* <Navbar.Brand href={homeUrl}>Navbar</Navbar.Brand */}
-
           <Nav className="me-auto">
+            <Nav.Link>
+              <Button
+                variant="primary navbar-btn"
+                onClick={() => this.pathHandler("landing")}
+                className={clsx(
+                  sessionStorage.getItem("currentPath") === "landing"
+                    ? "btn-selected"
+                    : "btn-navbar"
+                )}
+              >
+                Homepage
+              </Button>
+            </Nav.Link>
+            <Nav.Link>
+              <Button
+                variant="primary navbar-btn"
+                onClick={() => this.pathHandler("features")}
+                className={clsx(
+                  sessionStorage.getItem("currentPath") === "features"
+                    ? "btn-selected"
+                    : "btn-navbar"
+                )}
+              >
+                Features
+              </Button>
+            </Nav.Link>
+            {/* {sessionStorage.getItem("currentPath")} */}
+            <Nav.Link>{this.props.userData.email}</Nav.Link>
+
             <Nav.Link>{this.props.userData.displayName}</Nav.Link>
             <Nav.Link>{this.props.userData.email}</Nav.Link>
             <Nav.Link>{this.props.userData.photoUrl}</Nav.Link>
@@ -48,5 +84,13 @@ class CreateNavbar extends React.Component {
     );
   }
 }
-
-export default CreateNavbar;
+const mapStateToProps = (state) => {
+  console.log("THIS IS THE STATE FROM LANDING", state);
+  return {
+    value: state.value,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CreateNavbar);

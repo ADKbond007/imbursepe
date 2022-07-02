@@ -1,5 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
+import "./scss/base.scss";
 import React from "react";
 import fire from "./config/fire";
 import {
@@ -29,7 +30,6 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <h1>TITLE PAGE</h1>
           <Routes>
             <Route
               path="*"
@@ -64,7 +64,18 @@ class App extends React.Component {
               path=":userId/landing"
               element={
                 sessionStorage.getItem("loginVar") === "true" ? (
-                  <Landing />
+                  <Landing currentPage="landing" />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            ></Route>
+            <Route
+              exact
+              path=":userId/features"
+              element={
+                sessionStorage.getItem("loginVar") === "true" ? (
+                  <Landing currentPage="features" />
                 ) : (
                   <Navigate to="/login" />
                 )
@@ -77,10 +88,9 @@ class App extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  // console.log("THIS IS THE STATE FROM APP", state);
   return {
     value: state.value,
-  }; // state
+  };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { LogoutAction } from "../Action/Myaction";
+import { LogoutAction, SetPath } from "../Action/Myaction";
 import Button from "react-bootstrap/Button";
 import {
   getAuth,
@@ -9,8 +9,16 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+} from "react-router-dom";
 import Navbar from "./commons/navbar";
 import session from "redux-persist/lib/storage/session";
+import Features from "./pages/Features";
 
 class Landing extends React.Component {
   constructor(props) {
@@ -34,12 +42,29 @@ class Landing extends React.Component {
   callLoger = () => {
     console.log("Logger");
   };
-
+  // <div className="navbar-container">
+  //         <Navbar userData={this.state.userData} />
+  //       </div>
+  //       <div className="main-content-container">
+  //         <Route
+  //           exact
+  //           path=":userId/landing/features"
+  //           element={<Features />}
+  //         ></Route>
+  //       </div>
   render() {
+    let { currentPage: currentPage } = this.props;
+    let PageToRender = () => {
+      if (sessionStorage.getItem("currentPath") === "landing") {
+        return <h1>Hello world</h1>;
+      } else if (sessionStorage.getItem("currentPath") === "features") {
+        return <Features />;
+      }
+    };
     return (
-      <div>
-        {/* <Button onClick={this.callLoger}>Lander</Button> */}
-        <Navbar userData={this.state.userData} />
+      <div className="navbar-container">
+        <Navbar userData={this.state.userData} path={currentPage} />
+        {PageToRender()}
       </div>
     );
   }
@@ -51,7 +76,6 @@ const mapStateToProps = (state) => {
   }; // state
 };
 const mapDispatchToProps = (dispatch) => {
-  console.log("ACTIONS LOADED");
   return {
     logoutSuccess: ({}) => dispatch(LogoutAction({})),
   };

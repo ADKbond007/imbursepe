@@ -2,6 +2,7 @@ const initialState = {
   payload: "Hellopayload",
   userData: {},
   uId: "",
+  currentPath: "",
 };
 
 const reducer = (state = initialState, action) => {
@@ -21,7 +22,12 @@ const reducer = (state = initialState, action) => {
       console.log("Logout success");
       return {
         ...state,
-        uId: "",
+        uId: state.userData.uid,
+      };
+    case "SET_PATH":
+      return {
+        ...state,
+        currentPath: action.payload,
       };
 
     default:
