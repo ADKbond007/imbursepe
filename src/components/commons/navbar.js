@@ -44,9 +44,10 @@ class CreateNavbar extends React.Component {
                 onClick={() => this.pathHandler("landing")}
                 className={clsx(
                   sessionStorage.getItem("currentPath") === "landing"
-                    ? "btn-selected"
+                    ? ""
                     : "btn-navbar"
                 )}
+                disabled={sessionStorage.getItem("currentPath") === "landing"}
               >
                 Homepage
               </Button>
@@ -57,9 +58,10 @@ class CreateNavbar extends React.Component {
                 onClick={() => this.pathHandler("features")}
                 className={clsx(
                   sessionStorage.getItem("currentPath") === "features"
-                    ? "btn-selected"
+                    ? ""
                     : "btn-navbar"
                 )}
+                disabled={sessionStorage.getItem("currentPath") === "features"}
               >
                 Features
               </Button>

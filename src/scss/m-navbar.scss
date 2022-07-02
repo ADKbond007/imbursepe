@@ -16,17 +16,21 @@
                     background-color:$btn-blue;
                     border:none;
                     &:hover{
-                        box-shadow:0 0 50px $btn-blue;
+                        background-color: white;
+                        color:$btn-blue;
+                        box-shadow:0 0 50px white;
                         border:none;
                         // outline:none;
                     }
-                    &.btn-selected{
-                        background-color:$btn-black;
-                        color:white;
-                        &:hover{
-                            box-shadow:none;
+                    &:disabled{
+                        background-color: $btn-black;
+                        opacity:1;
+                        color: white;
+                        &:hover {
+                            box-shadow: none;
                         }
                     }
+                    
                 }
             }
         }
